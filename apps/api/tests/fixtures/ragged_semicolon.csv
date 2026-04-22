@@ -1,0 +1,4 @@
+first_name;last_name;email;phone
+Jane;Doe;jane@example.com;+12025550100
+Bob;Smith;bob@example.com
+Alice;Jones;alice@example.com;+12025550102;extra
