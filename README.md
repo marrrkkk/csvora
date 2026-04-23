@@ -83,13 +83,16 @@ csvora ingests messy CSV files, analyzes structure and mappings, transforms data
 - Docker Desktop (with Compose)
 - `make` (optional convenience wrapper; direct `docker compose` commands still supported)
 
-Windows note: if `make` is not installed, use the PowerShell helpers:
+On Windows (without `make`), use the PowerShell scripts in `scripts/`:
 
-- `./scripts/dev.ps1`
-- `./scripts/migrate.ps1`
-- `./scripts/test.ps1`
-- `./scripts/web.ps1`
-- `./scripts/docs-sync.ps1`
+- `.\scripts\dev.ps1`
+- `.\scripts\api.ps1`
+- `.\scripts\worker.ps1`
+- `.\scripts\migrate.ps1`
+- `.\scripts\test.ps1`
+- `.\scripts\down.ps1`
+- `.\scripts\web.ps1`
+- `.\scripts\docs-sync.ps1`
 
 ### Root Commands
 
@@ -102,29 +105,35 @@ Windows note: if `make` is not installed, use the PowerShell helpers:
 - `make web`: run the web app (Next.js dev server) from `apps/web`.
 - `make docs-sync`: export/sync OpenAPI spec into `apps/web/public/openapi.json`.
 
-### Run the web app (without make)
+### Run the web app
 
-```bash
+```powershell
+# PowerShell
+.\scripts\web.ps1
+
+# Or directly
 npm --prefix apps/web run dev
 ```
 
 ### Sync OpenAPI spec for web API reference
 
-From the repo root:
+```powershell
+# PowerShell
+.\scripts\docs-sync.ps1
 
-```bash
-make docs-sync
-```
-
-Without make:
-
-```bash
+# Or directly
 py -3 scripts/openapi_sync.py
 ```
 
 ### Start
 
-```bash
+```powershell
+# PowerShell
+cp .env.example .env
+.\scripts\dev.ps1
+.\scripts\migrate.ps1
+
+# Or with make (Unix)
 cp .env.example .env
 make dev
 make migrate
@@ -176,7 +185,13 @@ docker compose exec -T postgres psql -U csv_import_fixer -d csv_import_fixer -c 
 
 ## Testing
 
-```bash
+```powershell
+# PowerShell
+.\scripts\dev.ps1
+.\scripts\migrate.ps1
+.\scripts\test.ps1
+
+# Or with make (Unix)
 make dev
 make migrate
 make test
